@@ -21,7 +21,7 @@ public class Mymap extends Mapper<LongWritable, Text, FloatWritable, Text>{
 		float rating= Float.parseFloat(rate);
 		
 		outKey.set(rating);
-		}catch(Exception e){}
+		}catch(Exception e){ }
 		context.write(outKey, value);
 	}
 
