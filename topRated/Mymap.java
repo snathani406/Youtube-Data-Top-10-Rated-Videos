@@ -14,13 +14,14 @@ public class Mymap extends Mapper<LongWritable, Text, FloatWritable, Text>{
 	{
 		String data= value.toString();
 		String dataArray[]=data.split("\t");
+		FloatWritable outKey= new FloatWritable();
+		try{
 		String rate= dataArray[6];
 		//String ratedBy= dataArray[7];
 		float rating= Float.parseFloat(rate);
 		
-		FloatWritable outKey= new FloatWritable();
-		
 		outKey.set(rating);
+		}catch(Exception e){}
 		context.write(outKey, value);
 	}
 
