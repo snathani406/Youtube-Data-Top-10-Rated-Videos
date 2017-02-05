@@ -28,6 +28,7 @@ public class Myreduce extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 		{
 			String data= value.toString();
 			String dataArray[]= data.split("\t");
+			try{
 			String rated= dataArray[7];
 			String id= dataArray[0];
 			int ratedBy= Integer.parseInt(rated);
@@ -37,6 +38,7 @@ public class Myreduce extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 				max= ratedBy;
 				mapValue.set(id);
 			}
+			}catch(Exception e){ }
 		}
 		
 		map.put(key, mapValue);
