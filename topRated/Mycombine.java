@@ -28,6 +28,7 @@ TreeMap<FloatWritable, Text> map;
 		{
 			String data= value.toString();
 			String dataArray[]= data.split("\t");
+			try{
 			String rated= dataArray[7];
 			//String id= dataArray[0];
 			int ratedBy= Integer.parseInt(rated);
@@ -37,6 +38,7 @@ TreeMap<FloatWritable, Text> map;
 				max= ratedBy;
 				mapValue.set(value);
 			}
+			}catch(Exception e){ }
 		}
 		
 		map.put(key, mapValue);
