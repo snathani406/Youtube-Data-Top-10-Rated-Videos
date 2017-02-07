@@ -12,17 +12,17 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class Mycombine extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 	
-TreeMap<FloatWritable, Text> map;
+TreeMap<Float, String> map;
 	
 	public void setup(Context context)
 	{
-		map= new TreeMap<FloatWritable, Text>();
+		map= new TreeMap<Float, String>();
 	}
 	
 	public void reduce(FloatWritable key, Iterable<Text> values, Context context)
 	{
 		int max=0;
-		Text mapValue= new Text();
+		String mapValue= new String();
 		
 		for(Text value:values)
 		{
@@ -36,12 +36,12 @@ TreeMap<FloatWritable, Text> map;
 			if(max<ratedBy)
 			{
 				max= ratedBy;
-				mapValue.set(value);
+				mapValue= data;
 			}
 			}catch(Exception e){ }
 		}
 		
-		map.put(key, mapValue);
+		map.put(key.get(), mapValue);
 		
 		if(map.size()>10)
 		{
@@ -54,7 +54,13 @@ TreeMap<FloatWritable, Text> map;
 	{
 		for(Map.Entry<FloatWritable, Text> entry:map.entrySet())
 		{
-			context.write(entry.getKey(), entry.getValue());
+			FloatWritable outKey= new FloatWritable();
+			Text outValue= new Text();
+			
+			outKey.set(entry.getKey());
+			outValue.set(entry.getValue());
+			
+			context.write(outKey, outValue);
 		}
 	}
 
