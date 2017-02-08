@@ -12,11 +12,11 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class Myreduce extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 	
-	TreeMap<FloatWritable, Text> map;
+	TreeMap<Float, String> map;
 	
 	public void setup(Context context)
 	{
-		map= new TreeMap<FloatWritable, Text>();
+		map= new TreeMap<Float, String>();
 	}
 	
 	public void reduce(FloatWritable key, Iterable<Text> values, Context context)
@@ -52,7 +52,7 @@ public class Myreduce extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 	
 	public void cleanup(Context context)throws IOException, InterruptedException
 	{
-		for(Map.Entry<FloatWritable, Text> entry:map.entrySet())
+		for(Map.Entry<Float, String> entry:map.entrySet())
 		{
 			context.write(entry.getKey(), entry.getValue());
 		}
