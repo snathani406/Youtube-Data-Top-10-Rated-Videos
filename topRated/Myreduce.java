@@ -22,7 +22,7 @@ public class Myreduce extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 	public void reduce(FloatWritable key, Iterable<Text> values, Context context)
 	{
 		int max=0;
-		Text mapValue= new Text();
+		String mapValue= new String();
 		
 		for(Text value:values)
 		{
@@ -30,13 +30,13 @@ public class Myreduce extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 			String dataArray[]= data.split("\t");
 			try{
 			String rated= dataArray[7];
-			String id= dataArray[0];
+			//String id= dataArray[0];
 			int ratedBy= Integer.parseInt(rated);
 			
 			if(max<ratedBy)
 			{
 				max= ratedBy;
-				mapValue.set(id);
+				mapValue= dataArray[0];
 			}
 			}catch(Exception e){ }
 		}
@@ -54,7 +54,13 @@ public class Myreduce extends Reducer<FloatWritable, Text, FloatWritable, Text>{
 	{
 		for(Map.Entry<Float, String> entry:map.entrySet())
 		{
-			context.write(entry.getKey(), entry.getValue());
+			FloatWritable outKey= new FloatWritble();
+			Text outValue= new Text();
+			
+			outKey.set(entry.getKey());
+			outValue.set(entry.getValue());
+			
+			context.write(outKey, outValue);
 		}
 	}
 
