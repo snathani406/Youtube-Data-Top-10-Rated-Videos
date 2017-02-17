@@ -24,14 +24,16 @@ public class Driver {
 	 job.setReducerClass(Myreduce.class);
 	 job.setCombinerClass(Mycombine.class);
 	 job.setNumReduceTasks(1);
-	 job.setMapOutputKeyClass(Text.class);
-	 job.setMapOutputValueClass(IntWritable.class);
-	 job.setOutputKeyClass(IntWritable.class);
+	
+	 job.setMapOutputKeyClass(FloatWritable.class);
+	 job.setMapOutputValueClass(Text.class);
+	
+	 job.setOutputKeyClass(FloatWritable.class);
 	 job.setOutputValueClass(Text.class);
+	
 	 FileInputFormat.addInputPath(job, new Path(args[0]));
 	 FileOutputFormat.setOutputPath(job, new Path(args[1]));
 	 
 	 System.exit(job.waitForCompletion(true)?0:1);
 	 
-
 }
